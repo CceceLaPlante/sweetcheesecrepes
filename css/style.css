@@ -1,0 +1,472 @@
+/* css/style.css */
+
+@font-face {
+    font-family: 'strawmilk'; 
+    src: url('../fonts/Straw\ Milky.otf') format('truetype'); 
+    font-weight: normal; /* Or bold, italic, etc., if the font file is for a specific weight/style */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sugarfruit'; 
+    src: url('../fonts/Sugar\ Fruit.otf') format('truetype'); 
+    font-weight: normal; /* Or bold, italic, etc., if the font file is for a specific weight/style */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sono'; 
+    src: url('../fonts/web/Sono-Medium.woff2') format('woff2'); 
+    font-weight: normal; /* Or bold, italic, etc., if the font file is for a specific weight/style */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'daydream'; 
+    src: url('../fonts/Daydream.ttf') format('truetype'); 
+    font-weight: normal; /* Or bold, italic, etc., if the font file is for a specific weight/style */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'stitch'; 
+    src: url('../fonts/Kawaii\ Stitch.otf') format('truetype'); 
+    font-weight: normal; /* Or bold, italic, etc., if the font file is for a specific weight/style */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'pixel'; 
+    src: url('../fonts/VCR_OSD_MONO_1.001.ttf') format('truetype'); 
+    font-weight: normal; /* Or bold, italic, etc., if the font file is for a specific weight/style */
+    font-style: normal;
+}
+
+
+
+
+/* Declare your Plasma color palette as CSS variables */
+:root {
+    --plasma-black: #000000;
+    --plasma-white: #ffffff;
+    --plasma-dark-blue: #1d1d3c;
+    --plasma-deep-blue: #05006e;
+    --plasma-pale-blue: #2c2a50;
+    --plasma-light-blue: #4b3a9e;
+    --plasma-light-pale-blue: #5944a4;
+    --plasma-pale-purple: #8c59a0;
+    --plasma-purple: #7e03a8;
+    --plasma-pink: #cc4778;
+    --plasma-light-pink: #d87498;
+    --plasma-orange: #f89540;
+    --plasma-yellow: #fcce25;
+    --plasma-bright-yellow: #f3f027; 
+
+
+    --darkish-overlay: #06002042; /* This is the same as --plasma-dark-blue */
+    --dark-overlay: #0000007d; /* This is the same as --plasma-deep-blue */
+
+
+    --back-color-global: var(--plasma-pale-blue);
+    --back-col: var(--dark-overlay);
+    --back-color-footer: var(--plasma-dark-blue);
+    --back-color-header: var(--darkish-overlay);
+    --banner-back-color: var(--plasma-purple);
+
+    --header-text-color: var(--plasma-pink);
+    --footer-text-color: var(--plasma-yellow);
+    --link-color: var(--plasma-orange);
+    --link-hover-color: var(--plasma-bright-yellow);
+    --body-text-color: var(--plasma-yellow);
+    --banner-text-color: var(--plasma-bright-yellow);
+    --p-text-color: var(--plasma-yellow);
+
+
+    
+    --font-computery: "sono", monospace;
+    --font-mimi: 'sono', sans-serif; 
+    --font-link: 'pixel', monospace;
+
+    --art-card-min-width: 270px; /* Minimum width for each art card */
+
+    
+}
+
+body {
+    background-color: var(--back-color-global);
+    color: var(--body-text-color); 
+    font-family: var(--font-computery);
+    line-height: 1.4; /* Improves readability a bit */
+
+}
+
+header {
+    background-color: var(--back-color-header);
+    padding: 20px;
+    text-align: center;
+    font-family: var(--font-mimi);
+    border-radius: 0.3rem;
+    border: 3px dashed var(--header-text-color);
+    
+}
+
+
+.webring {
+    width:70%;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
+.content {
+    display: flex; /* This existing rule is for its children (the columns) */
+    gap: 10px;
+    margin-top: 10px;
+
+    /* --- Add this property --- */
+    flex-grow: 1; /* Or you can use the shorthand: flex: 1; */
+}
+.left-col {
+    flex: 0 0 22%;
+    background-color: var(--back-col);
+    padding: 10px;
+    border-radius: 0.3rem;
+
+    max-width: 20%;
+}
+
+.left-col img {
+    width: 100%;
+}
+
+.right-col {
+    flex: 0 0 22%;
+    background-color: var(--back-col);
+    padding: 10px;
+    border-radius: 0.3rem;
+    max-width: 20%;
+    
+}
+
+.right-col img {
+    width: 100%;
+
+}
+
+.site-wrapper {
+    max-width: 75rem;
+    margin: 20px auto; 
+
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 40px); /* 100% of viewport height MINUS top/bottom margins */
+                                /* If you remove margin-top/bottom, just use 100vh */
+}
+
+.left-col ul {
+    list-style-type:square; 
+}
+
+.left-col ul li {
+    color: var(--link-color);
+}
+
+.left-col ul li a {
+
+    color: var(--link-color); 
+}
+
+.left-col ul li a:hover {
+    color: var(--link-hover-color); 
+}
+
+a {
+    color: var(--link-color);
+    text-decoration:dotted;
+    font-family: var(--font-link);
+}
+
+footer {
+    background-color: var(--back-color-footer);
+    color: var(--footer-text-color);
+    text-align: center;
+    padding: 10px;
+    font-family: var(--font-mimi);
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:1rem
+}
+
+main {
+    flex: 1;
+    background-color: var(--back-col);
+    padding: 10px;
+    border-radius: 0.3rem;
+}
+
+
+h1 {
+    color: var(--header-text-color);
+    text-align: center;
+    font-family: var(--font-mimi);
+}
+
+p {
+    color: var(--p-text-color);
+    font-size: 18px;
+}
+
+.webcore-banner {
+    border: 3px solid var(--banner-back-color);
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.313); /* You could make black a variable too if used often */
+    border-radius: 0.3rem;
+
+}
+
+.webcore-banner p {
+    color: var(--banner-text-color);
+    font-weight: bold;
+    text-shadow: 2px 2px var(--banner-back-color);
+}
+
+.art-gallery {
+    display: grid; /* CHANGED from flex to grid */
+    /* This is the new line that creates adjustable columns: */
+    grid-template-columns: repeat(auto-fit, minmax(var(--art-card-min-width, 270px), 1fr));
+    gap: 20px; 
+    padding: 20px 0; 
+}
+
+/* THIS IS THE MODIFIED .art-card RULE */
+.art-card {
+    background-color: var(--plasma-dark-blue); 
+    border: 3px dashed var(--plasma-pink); 
+    border-radius: 0.3rem;
+    padding: 15px;
+    /* MAKE SURE YOU REMOVED or COMMENTED OUT the 'width: 280px;' line from the previous version */
+    /* For example, it should NOT have: width: 280px; */
+    box-shadow: 0 4px 8px var(--dark-overlay); 
+    text-align: center;
+    display: flex; /* This is fine, it controls the content INSIDE the card */
+    flex-direction: column; 
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+    
+
+}
+
+.art-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px var(--dark-overlay); 
+    background-color: var(--back-color-global);
+}
+
+.art-card img {
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 0.2rem; 
+    margin-bottom: 15px;
+    border: 2px solid var(--plasma-light-pale-blue); 
+}
+
+.art-card h3 {
+    font-family: var(--font-mimi); 
+    color: var(--plasma-orange);
+    font-size: 1.4em;
+    margin-top: 0; 
+    margin-bottom: 10px;
+}
+
+.art-card p {
+    font-family: var(--font-computery);
+    color: var(--plasma-yellow); 
+    font-size: 16px; 
+    line-height: 1.5;
+    flex-grow: 1; 
+    margin-bottom: 0;
+}
+
+
+.dialog-wrapper {
+    position: fixed; 
+    top: 90%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    
+    display: none;
+    z-index: 1000; /* Ensure it appears above other content */
+
+    width: 50rem;
+    max-width: 80%;
+
+}
+
+.dialog-box {
+    background-color: var(--plasma-black);
+    color: var(--plasma-white);
+    padding: 13px;
+
+    box-shadow: 0 4px 8px var(--dark-overlay);
+    
+    border-width: 3px;
+    border-color: var(--plasma-white);
+    border-style:double;
+
+    display:flex;
+    align-items: flex-start;
+
+
+}
+
+.dialog-box p {
+    color: var(--plasma-white);
+    justify-content: right;
+    flex-grow: 1;
+    padding:1rem;
+}
+
+.dialog-box img {
+    width: 100px;
+    height: auto;
+}
+
+.button_container {
+    display:flex;
+    justify-content: center;
+}
+
+.order {
+    background-color: var(--plasma-light-pink);
+    padding: 3rem;
+
+    color: var(--banner-back-color); 
+    border: none;
+    border-radius: 5px; 
+    font-family: var(--font-mimi); 
+    font-size: 1.2em; 
+    cursor: pointer; 
+
+}
+
+.order:hover {
+    color: var(--plasma-white);
+    background-color: var(--header-text-color);
+}
+
+#coffee-modal-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); 
+    z-index: 1999; 
+
+    display: none; 
+    /*display: flex;*/  /* Uncomment this and next two lines after JS shows it */
+    justify-content: center; 
+    align-items: center; 
+}
+
+#coffee-modal-content {
+
+    color: var(--plasma-white);
+    padding: 25px;
+    border-radius: 8px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.733);
+    z-index: 2000; 
+
+    min-width: 300px; 
+    max-width: 600px; 
+    width: 80%;     
+
+    text-align: center; 
+}
+
+#coffee-sprite {
+    max-width: 150px; /* Adjust size as needed */
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+#coffee-dialog-text {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: var(--plasma-white); /* Example text color */
+    min-height: 50px; /* Give it some space even if text is short */
+}
+
+#coffee-choices {
+    margin-bottom: 20px;
+    /* Styles for buttons inside will be added later */
+}
+
+#close-coffee-modal-btn {
+    background-color: var(--plasma-black);
+    color: var(--plasma-white);
+    border-color: var(--plasma-white);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-mimi);
+    font-size: 1em;
+}
+
+#close-coffee-modal-btn:hover {
+    background-color: var(--header-text-color);
+}
+
+.coffee-choices {
+    display: flex;
+    flex-direction: row;
+
+    gap:20px;
+    padding:20px;
+
+    background-color: var(--plasma-black);
+
+    
+}
+
+.choice-button {
+    flex:1;
+
+    margin: 8px auto; 
+    padding: 12px 15px;
+
+    background-color: var(--plasma-black);
+    color: var(--plasma-white);
+    border: 1px solid var(--plasma-white);
+    border-radius: 0.5px;
+    border-style: solid;
+
+    cursor: pointer;
+    font-family: var(--font-mimi);
+    font-size: 1em;
+
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.choice-button:hover {
+    background-color: var(--body-text-color);
+    color: var(--plasma-black)
+}
+
+/* Your existing responsive rule for main layout columns is fine to keep */
+@media (max-width: 768px) {
+    .main-content-area { 
+        flex-direction: column; 
+    }
+    .left-sidebar, .right-sidebar { 
+        flex-basis: auto; 
+        width: 100%;
+    }
+}

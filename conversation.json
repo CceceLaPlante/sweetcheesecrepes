@@ -1,0 +1,49 @@
+{
+  "start": {
+    "sprite_text": "Welcome to my café! Would you like to order a coffee? :3",
+    "sprite_image": "images/madam.png",
+    "choices": [
+      { "text": "Yes, please!", "next_node_id": "ask_type" },
+      { "text": "No, thanks.", "next_node_id": "farewell" }
+    ]
+  },
+  "ask_type": {
+    "sprite_text": "Great! What kind of coffee would you like?",
+    "sprite_image": "images/madam_thinking.png",
+    "choices": [
+      { "text": "Espresso", "next_node_id": "confirm_order", "item": "Espresso" },
+      { "text": "Latte", "next_node_id": "confirm_order", "item": "Latte" },
+      { "text": "Cappuccino", "next_node_id": "confirm_order", "item": "Cappuccino" },
+      { "text": "hugh, no starbucks grande ? nevermind then...", "next_node_id": "farewell" }
+    ]
+  },
+  "confirm_order": {
+    "sprite_text": "One %ITEM% coming right up! That'll be 0 (#anarchy baby)",
+    "sprite_image": "images/madam_happy.png",
+    "choices": [
+      { "text": "Sounds good!", "next_node_id": "payment" },
+      { "text": "Too expensive!", "next_node_id": "too_expensive" }
+    ]
+  },
+  "payment": {
+    "sprite_text": "Excellent!",
+    "sprite_image": "images/madam.png",
+    "choices": [
+        {"text": "Enjoy your coffee!", "action": "end_conversation"}
+    ]
+  },
+  "too_expensive": {
+    "sprite_text": "Oh, I understand... Maybe another time!",
+    "sprite_image": "images/madam_sympathetic.png",
+    "choices": [
+        {"text": "Maybe...", "next_node_id": "farewell"}
+    ]
+  },
+  "farewell": {
+    "sprite_text": "Okay ! Have a great day! :D",
+    "sprite_image": "images/madam_wave.png",
+    "choices": [
+      { "text": "Bye!", "action": "end_conversation" }
+    ]
+  }
+}

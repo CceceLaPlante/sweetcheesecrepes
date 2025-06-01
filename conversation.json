@@ -4,7 +4,8 @@
     "sprite_image": "images/madam.png",
     "choices": [
       { "text": "Yes, please!", "next_node_id": "ask_type" },
-      { "text": "No, thanks.", "next_node_id": "farewell" }
+      { "text": "No, thanks.", "next_node_id": "farewell" },
+      {"text": "the secret sauce please", "next_node_id":"ask_for_secret_drink"}
     ]
   },
   "ask_type": {
@@ -45,5 +46,42 @@
     "choices": [
       { "text": "Bye!", "action": "end_conversation" }
     ]
+  },
+
+  "ask_for_secret_drink": {
+    "sprite_text": "Oh wah, a connoisseur, and what is it name ?",
+    "sprite_image": "images/madam_conspiratorial.png",
+    "entry_mode": {
+      "prompt_text": "Whisper the name:", 
+      "secrets": [
+        { "input": "chocolat", "next_node_id": "secret_drink_reveal"}
+      ],
+      "default_next_node_id": "ask_for_secret_drink_fail"
+    }
+  },
+
+  "ask_for_secret_drink_fail": {
+    "sprite_text": "Hmm, that's not it. Are you sure you know the secret?",
+    "sprite_image": "images/madam_skeptical.png",
+    "choices": [
+      { "text": "Let me try again.", "next_node_id": "ask_for_secret_drink" },
+      { "text": "No, I guess not. (Back to regular menu)", "next_node_id": "ask_for_secret_drink" }
+    ]
+  },
+
+  "secret_drink_reveal": {
+    "sprite_text": "Ah, you're one of the few who know about the chocolat... Excellent choice. It has... unique properties.",
+    "sprite_image": "images/madam_impressed.png",
+    "choices": [
+      { "text": "I'll take it!", "next_node_id": "farewell" },
+      { "text": "On second thought...", "next_node_id": "ask_for_secret_drink" }
+    ]
   }
+
 }
+
+
+
+
+
+

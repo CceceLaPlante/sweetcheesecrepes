@@ -18,9 +18,14 @@ const coffeeChoicesContainer = document.getElementById('coffee-choices');
 const closeCoffeeModalBtn = document.getElementById('close-coffee-modal-btn');
 const orderCoffeeBtn = document.querySelector('.order');
 
+const coffeeEntryArea = document.getElementById('coffee-entry-area');
+const coffeeTextInput = document.getElementById('coffee-text-input');
+const coffeeSubmitEntryBtn = document.getElementById('coffee-submit-entry-btn');
+
 let conversationData = null ;
 let currentNodeId = null;
 let currentItem = null;
+let entryAnswer = null;
 
 function displayNode (nodeId) {
     if (!conversationData || !conversationData[nodeId]) {
@@ -54,20 +59,86 @@ function displayNode (nodeId) {
     if (coffeeChoicesContainer) {
         coffeeChoicesContainer.innerHTML = ''; 
 
-        if (node.choices && node.choices.length > 0) {
-            node.choices.forEach( choice => {
-                const button = document.createElement('button');
-                button.classList.add('choice-button');
-                button.textContent = choice.text;
-                button.addEventListener( 'click',() => {
-                    handleChoice(choice)
-                });
-                coffeeChoicesContainer.appendChild(button);
-            } );
-            
-        }
+        if (node.entry_mode) {
 
+            if (coffeeChoicesContainer) coffeeChoicesContainer.style.display = 'none'; 
+            if (coffeeEntryArea) coffeeEntryArea.style.display = 'flex'; 
+
+            if (coffeeTextInput) {
+                coffeeTextInput.value = ''; // Clear previous input
+                coffeeTextInput.placeholder = node.entry_mode.prompt_text || "Type here...";
+                coffeeTextInput.focus(); // Focus on the input field
+            }
+        } else if (node.choices) {
+
+            if (coffeeEntryArea) coffeeEntryArea.style.display = 'none'; 
+                if (coffeeChoicesContainer) {
+                    coffeeChoicesContainer.style.display = 'block';
+                    coffeeChoicesContainer.innerHTML = ''; // Clear old buttons
+
+                    node.choices.forEach(choice => {
+                        const button = document.createElement('button');
+                        button.classList.add('choice-button');
+                        button.textContent = choice.text;
+                        button.addEventListener('click', () => handleChoice(choice));
+                        coffeeChoicesContainer.appendChild(button);
+                    });
+                }
+            } else {
+                if (coffeeChoicesContainer) coffeeChoicesContainer.style.display = 'none';
+                if (coffeeEntryArea) coffeeEntryArea.style.display = 'none';
+                console.log("Node has no interactive elements:", nodeId);
+            }
+        
     }
+}
+
+function handleEntrySubmit() {
+    if (!conversationData || !currentNodeId || !conversationData[currentNodeId] || !conversationData[currentNodeId].entry_mode) {
+        console.error("Cannot handle entry: current node is not an entry node or data missing.");
+        return;
+    }
+
+    const node = conversationData[currentNodeId];
+    const entryConfig = node.entry_mode;
+    const userInput = coffeeTextInput.value.trim().toLowerCase(); // Get input, trim whitespace, make lowercase for easier comparison
+
+    if (!userInput) return; 
+
+    let navigated = false;
+    if (entryConfig.secrets && entryConfig.secrets.length > 0) {
+        for (const secret of entryConfig.secrets) {
+            if (userInput === secret.input.toLowerCase()) { 
+
+                displayNode(secret.next_node_id);
+                navigated = true;
+                break; 
+            }
+        }
+    }
+
+    if (!navigated) {
+        if (entryConfig.default_next_node_id) {
+            displayNode(entryConfig.default_next_node_id);
+        } else {
+            // Optional: Re-display current prompt or show a generic "try again" message
+            typewriterEffect(coffeeDialogText, node.sprite_text + "\n(Hmm, that's not it. Try again?)");
+            if (coffeeTextInput) coffeeTextInput.value = ''; // Clear input
+        }
+    }
+}
+
+// Add Event Listener for the submit button (and maybe Enter key on input)
+if (coffeeSubmitEntryBtn) {
+    coffeeSubmitEntryBtn.addEventListener('click', handleEntrySubmit);
+}
+if (coffeeTextInput) {
+    coffeeTextInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent form submission if it's in a form
+            handleEntrySubmit();
+        }
+    });
 }
 
 function handleChoice (choice)  {

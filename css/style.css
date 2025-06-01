@@ -342,7 +342,10 @@ p {
 
 .order {
     background-color: var(--plasma-light-pink);
-    padding: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 0.8rem;
 
     color: var(--banner-back-color); 
     border: none;
@@ -352,6 +355,7 @@ p {
     cursor: pointer; 
 
 }
+
 
 .order:hover {
     color: var(--plasma-white);
@@ -368,7 +372,6 @@ p {
     z-index: 1999; 
 
     display: none; 
-    /*display: flex;*/  /* Uncomment this and next two lines after JS shows it */
     justify-content: center; 
     align-items: center; 
 }
@@ -423,7 +426,7 @@ p {
     background-color: var(--header-text-color);
 }
 
-.coffee-choices {
+#coffee-choices {
     display: flex;
     flex-direction: row;
 
@@ -431,15 +434,14 @@ p {
     padding:20px;
 
     background-color: var(--plasma-black);
-
-    
 }
 
 .choice-button {
     flex:1;
 
-    margin: 8px auto; 
     padding: 12px 15px;
+
+    width: 100%;
 
     background-color: var(--plasma-black);
     color: var(--plasma-white);
@@ -459,6 +461,47 @@ p {
     background-color: var(--body-text-color);
     color: var(--plasma-black)
 }
+
+
+#coffee-entry-area {
+    margin: 15px;
+    display: flex; /* To put input and button side-by-side */
+    justify-content: center;
+    gap: 20px; /* Space between input and button */
+}
+
+#coffee-text-input {
+    padding: 10px;
+    border: 3px solid var(--plasma-white);
+    border-radius: 0px;
+    font-family: var(--font-computery);
+    background-color: var(--plasma-black);
+    color: var(--plasma-yellow);
+    flex-grow: 1; /* Allow input to take available space */
+    max-width: 70%;
+}
+
+#coffee-text-input:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: var(--plasma-white); /* Change border color on focus */
+}
+
+
+
+#coffee-submit-entry-btn {
+    padding: 10px 15px;
+    background-color: var(--plasma-black);
+    color: var(--plasma-white);
+    border: 3px solid var(--plasma-white);
+
+    cursor: pointer;
+    font-family: var(--font-mimi);
+}
+
+#coffee-submit-entry-btn:hover {
+    background-color: var(--plasma-yellow);
+}
+
 
 /* Your existing responsive rule for main layout columns is fine to keep */
 @media (max-width: 768px) {

@@ -3,85 +3,386 @@
     "sprite_text": "Welcome to my café! Would you like to order a coffee? :3",
     "sprite_image": "images/madam.png",
     "choices": [
-      { "text": "Yes, please!", "next_node_id": "ask_type" },
-      { "text": "No, thanks.", "next_node_id": "farewell" },
-      {"text": "the secret sauce please", "next_node_id":"ask_for_secret_drink"}
+      {
+        "text": "Yes, please!",
+        "next_node_id": "ask_type"
+      },
+      {
+        "text": "No, thanks.",
+        "next_node_id": "farewell"
+      },
+      {
+        "text": "i've got the code",
+        "next_node_id": "code_entry"
+      },
+      {
+        "text": "the secret sauce please",
+        "next_node_id": "ask_for_secret_drink"
+      }
+    ],
+    "editor_pos": [
+      644.7166971884552,
+      394.7802218324287
     ]
   },
   "ask_type": {
     "sprite_text": "Great! What kind of coffee would you like?",
     "sprite_image": "images/madam_thinking.png",
     "choices": [
-      { "text": "Espresso", "next_node_id": "confirm_order", "item": "Espresso" },
-      { "text": "Latte", "next_node_id": "confirm_order", "item": "Latte" },
-      { "text": "Cappuccino", "next_node_id": "confirm_order", "item": "Cappuccino" },
-      { "text": "hugh, no starbucks grande ? nevermind then...", "next_node_id": "farewell" }
+      {
+        "text": "Espresso",
+        "next_node_id": "confirm_order",
+        "item": "Espresso"
+      },
+      {
+        "text": "Latte",
+        "next_node_id": "confirm_order",
+        "item": "Latte"
+      },
+      {
+        "text": "Cappuccino",
+        "next_node_id": "confirm_order",
+        "item": "Cappuccino"
+      },
+      {
+        "text": "hugh, no starbucks grande ? nevermind then...",
+        "next_node_id": "farewell"
+      }
+    ],
+    "editor_pos": [
+      977.8642169250733,
+      233.73061949320396
     ]
   },
   "confirm_order": {
     "sprite_text": "One %ITEM% coming right up! That'll be 0 (#anarchy baby)",
     "sprite_image": "images/madam_happy.png",
     "choices": [
-      { "text": "Sounds good!", "next_node_id": "payment" },
-      { "text": "Too expensive!", "next_node_id": "too_expensive" }
+      {
+        "text": "Sounds good!",
+        "next_node_id": "payment"
+      },
+      {
+        "text": "Too expensive!",
+        "next_node_id": "too_expensive"
+      }
+    ],
+    "editor_pos": [
+      1337.4803633631577,
+      105.25373949866821
     ]
   },
   "payment": {
     "sprite_text": "Excellent!",
     "sprite_image": "images/madam.png",
     "choices": [
-        {"text": "Enjoy your coffee!", "action": "end_conversation"}
+      {
+        "text": "Enjoy your coffee!",
+        "action": "end_conversation"
+      }
+    ],
+    "editor_pos": [
+      1478.51307970767,
+      277.37313025066595
     ]
   },
   "too_expensive": {
     "sprite_text": "Oh, I understand... Maybe another time!",
     "sprite_image": "images/madam_sympathetic.png",
     "choices": [
-        {"text": "Maybe...", "next_node_id": "farewell"}
+      {
+        "text": "Maybe...",
+        "next_node_id": "farewell"
+      }
+    ],
+    "editor_pos": [
+      1015.4299569701523,
+      51.908339594290226
     ]
   },
   "farewell": {
     "sprite_text": "Okay ! Have a great day! :D",
     "sprite_image": "images/madam_wave.png",
     "choices": [
-      { "text": "Bye!", "action": "end_conversation" }
+      {
+        "text": "Bye!",
+        "action": "end_conversation"
+      }
+    ],
+    "editor_pos": [
+      681.7856425440083,
+      77.33506827303663
     ]
   },
-
+  "code_entry": {
+    "sprite_text": "oh my, go for it then...",
+    "sprite_image": "images/madam_conspiratorial.png",
+    "entry_mode": {
+      "prompt_text": "enter the code :",
+      "secrets": [
+        {
+          "input": "50880182",
+          "next_node_id": "code_success"
+        },
+        {
+          "input": "pute",
+          "next_node_id": "razane"
+        }
+      ],
+      "default_next_node_id": "code_fail"
+    },
+    "editor_pos": [
+      1320.7702560691732,
+      598.9212785854792
+    ]
+  },
   "ask_for_secret_drink": {
     "sprite_text": "Oh wah, a connoisseur, and what is it name ?",
     "sprite_image": "images/madam_conspiratorial.png",
     "entry_mode": {
-      "prompt_text": "Whisper the name:", 
+      "prompt_text": "Whisper the name:",
       "secrets": [
-        { "input": "chocolat", "next_node_id": "secret_drink_reveal"}
+        {
+          "input": "love love and chocolate",
+          "next_node_id": "secret_drink_reveal"
+        },
+        {
+          "input": "pute",
+          "next_node_id": "razane"
+        }
       ],
       "default_next_node_id": "ask_for_secret_drink_fail"
-    }
+    },
+    "editor_pos": [
+      202.16007308603957,
+      300.45762835801145
+    ]
   },
-
   "ask_for_secret_drink_fail": {
     "sprite_text": "Hmm, that's not it. Are you sure you know the secret?",
     "sprite_image": "images/madam_skeptical.png",
     "choices": [
-      { "text": "Let me try again.", "next_node_id": "ask_for_secret_drink" },
-      { "text": "No, I guess not. (Back to regular menu)", "next_node_id": "ask_for_secret_drink" }
+      {
+        "text": "Let me try again.",
+        "next_node_id": "ask_for_secret_drink"
+      },
+      {
+        "text": "No, I guess not. (Back to regular menu)",
+        "next_node_id": "ask_for_secret_drink"
+      }
+    ],
+    "editor_pos": [
+      123.58991872139896,
+      57.51314800901575
     ]
   },
-
   "secret_drink_reveal": {
-    "sprite_text": "Ah, you're one of the few who know about the chocolat... Excellent choice. It has... unique properties.",
+    "sprite_text": "Oh... not bad... let's play a game ! \nif you can answer to those question, you will have a surprise ^^",
     "sprite_image": "images/madam_impressed.png",
     "choices": [
-      { "text": "I'll take it!", "next_node_id": "farewell" },
-      { "text": "On second thought...", "next_node_id": "ask_for_secret_drink" }
+      {
+        "text": "okay !",
+        "next_node_id": "fav_drawing"
+      },
+      {
+        "text": "nah i don't like games...",
+        "next_node_id": "farewell"
+      }
+    ],
+    "editor_pos": [
+      245.54012704050263,
+      605.2551738269244
+    ]
+  },
+  "razane": {
+    "sprite_text": "razane tu me déprime...",
+    "sprite_image": "",
+    "editor_pos": [
+      628.1244308846856,
+      617.4409426521687
+    ],
+    "choices": [
+      {
+        "text": "partir avec un sentiment de satisfaction",
+        "next_node_id": "",
+        "action": "end_conversation"
+      }
+    ]
+  },
+  "drawing_fail": {
+    "sprite_text": "arh, no, sorry ^^'",
+    "sprite_image": "madam_sorry.png",
+    "editor_pos": [
+      966.4055773510793,
+      725.9480693219072
+    ],
+    "choices": [
+      {
+        "text": "let me try again",
+        "next_node_id": "drawing_again"
+      },
+      {
+        "text": "i think this question is too difficult for my little brain",
+        "next_node_id": "farewell"
+      }
+    ]
+  },
+  "drawing_again": {
+    "sprite_text": "fine... you get to try again...",
+    "sprite_image": "madam_depite.png",
+    "editor_pos": [
+      1385.443099708806,
+      828.164187789494
+    ],
+    "choices": [
+      {
+        "text": "try again",
+        "next_node_id": "fav_drawing"
+      }
+    ]
+  },
+  "drawing_success": {
+    "sprite_text": "annw you paid attention ? that's so cute thank's !! <3",
+    "sprite_image": "",
+    "editor_pos": [
+      551.7904301927696,
+      1116.856536719895
+    ],
+    "choices": [
+      {
+        "text": "next question",
+        "next_node_id": "fav_code"
+      }
+    ]
+  },
+  "fav_drawing": {
+    "sprite_text": "oooowkay so\nFirst question : \nWhat is my favourite drawing ?",
+    "editor_pos": [
+      568.5236145562975,
+      858.1542485632922
+    ],
+    "entry_mode": {
+      "prompt_text": "favourite drawing",
+      "secrets": [
+        {
+          "input": "your favourite drawing don't exist yet",
+          "next_node_id": "drawing_success"
+        },
+        {
+          "input": "my favourite drawing don't exist yet",
+          "next_node_id": "egocentric"
+        },
+        {
+          "input": "your favourite drawing doesn't exist yet",
+          "next_node_id": "drawing_success"
+        },
+        {
+          "input": "my favourite drawing doesn't exist yet",
+          "next_node_id": "egocentric"
+        },
+        {
+          "input": "your favourite drawing don't exist",
+          "next_node_id": "yet"
+        },
+        {
+          "input": "your favourite drawing doesn't exist",
+          "next_node_id": "yet"
+        },
+        {
+          "input": "my favourite drawing doesn't exist",
+          "next_node_id": "egocentric"
+        }
+      ],
+      "default_next_node_id": "drawing_fail"
+    }
+  },
+  "code_success": {
+    "sprite_text": "I am so sorry the surprise is underconstruction ^^'",
+    "sprite_image": "",
+    "editor_pos": [
+      1924.0,
+      715.0
+    ],
+    "choices": [
+      {
+        "text": "ah...",
+        "next_node_id": ""
+      }
+    ]
+  },
+  "fav_code": {
+    "sprite_text": "bahahahah you impatient cutie pie, okay, second question then\nwhat is my favourite coding project ?",
+    "sprite_image": "",
+    "editor_pos": [
+      616.0,
+      1353.0
+    ],
+    "entry_mode": {
+      "secrets": [
+        {
+          "input": "noiraude",
+          "next_node_id": "fav_code_success"
+        }
+      ],
+      "default_next_node_id": "fav_code_failed",
+      "prompt_text": "fav code ?"
+    }
+  },
+  "egocentric": {
+    "sprite_text": "how egocentric ! we're not talking about you !!",
+    "sprite_image": "madam_upset.png",
+    "editor_pos": [
+      1089.0,
+      1015.0
+    ],
+    "choices": [
+      {
+        "text": "leave",
+        "next_node_id": "",
+        "action": "end_conversation"
+      }
+    ]
+  },
+  "fav_code_success": {
+    "sprite_text": "annnwwwwwwwww okay it's not a coding project but i accept this answer",
+    "sprite_image": "",
+    "editor_pos": [
+      524.0,
+      1622.0
+    ],
+    "choices": [
+      {
+        "text": "New Choice",
+        "next_node_id": ""
+      }
+    ]
+  },
+  "fav_code_failed": {
+    "sprite_text": "no im sorry ^^'",
+    "editor_pos": [
+      1113.9403292181066,
+      1552.1296296296298
+    ],
+    "sprite_image": "madam_sorry.png",
+    "choices": [
+      {
+        "text": "let me try again !",
+        "next_node_id": "fav_code"
+      }
+    ]
+  },
+  "yet": {
+    "sprite_text": "how pesimistic !!! maybe one day i will have a favourite drawing !",
+    "sprite_image": "madam_upset.png",
+    "editor_pos": [
+      1169.0,
+      1263.0
+    ],
+    "choices": [
+      {
+        "text": "try again",
+        "next_node_id": "fav_drawing"
+      }
     ]
   }
-
 }
-
-
-
-
-
-

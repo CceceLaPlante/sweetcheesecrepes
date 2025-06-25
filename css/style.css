@@ -181,6 +181,40 @@ header {
     color: var(--link-hover-color); 
 }
 
+.social-media-link { 
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+}
+
+.social-media-link img {
+    width: 15%;
+    filter: invert(1); 
+    transition: filter 0.3s ease, opacity 0.3s ease; /* Smooth transition for filter and opacity */
+    opacity: 0.3; /* Slightly transparent */
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+}
+
+.social-media-link img:hover {
+    filter: invert(0.5); /* Change to a less intense effect on hover */
+    opacity: 1; /* Fully opaque on hover */
+}
+
+.social-media-link p {
+    color: var(--link-color);
+    font-family: var(--font-computery);
+    font-size: 1.2em;
+    margin: 0; /* Remove default margin */
+}
+
+.social-media-link p:hover {
+    color: var(--link-hover-color);
+}
+
+
+
 a {
     color: var(--link-color);
     text-decoration:dotted;
@@ -444,7 +478,7 @@ p {
     width: 100%;
 
     background-color: var(--plasma-black);
-    color: var(--plasma-white);
+    color: var(--banner-text-color);
     border: 1px solid var(--plasma-white);
     border-radius: 0.5px;
     border-style: solid;

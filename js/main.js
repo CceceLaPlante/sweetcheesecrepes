@@ -175,7 +175,6 @@ async function loadConversation () {
         const response = await fetch("conversation.json");
         
         conversationData = await response.json();
-        console.log("conversation data loaded ^^ ,",conversationData);
         
     } catch (error)  {
          console.error("Could not load conversation data:", error);

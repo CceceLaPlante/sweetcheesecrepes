@@ -1,0 +1,461 @@
+<!--fait par gemini ... pas le courage de le faire moi même-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Editor</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #555;
+        }
+        .node {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .node-id {
+            font-weight: bold;
+            color: teal;
+            margin-bottom: 10px;
+            display: block;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        input[type="text"], textarea {
+            width: calc(100% - 22px); /* Account for padding/border */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Important for width calculation */
+        }
+        textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .choices-list, .secrets-list {
+            margin-left: 20px;
+            border-left: 2px solid #eee;
+            padding-left: 15px;
+        }
+        .choice-item, .secret-item {
+            border: 1px dashed #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .add-button {
+            background-color: #28a745;
+        }
+        .add-button:hover {
+            background-color: #1e7e34;
+        }
+        .remove-button {
+            background-color: #dc3545;
+            font-size: 0.8em;
+            padding: 5px 8px;
+        }
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+        #output-json {
+            width: 100%;
+            min-height: 200px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            white-space: pre-wrap; /* To show formatted JSON */
+            background-color: #e9ecef;
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversation Editor</h1>
+
+        <div class="controls">
+            <button id="load-json-btn">Load conversation.json</button>
+            <button id="add-node-btn" class="add-button">Add New Node</button>
+            <button id="generate-json-btn">Generate JSON to Copy</button>
+        </div>
+
+        <div id="nodes-container">
+            <!-- Nodes will be rendered here by JavaScript -->
+        </div>
+
+        <h2>Generated JSON (Copy this):</h2>
+        <p id="json-validation-error" class="error-message" style="display:none;"></p>
+        <textarea id="output-json" readonly placeholder="Click 'Generate JSON to Copy' after making changes."></textarea>
+    </div>
+
+    <script>
+        let conversationData = {}; // Holds the current state of our conversation data
+
+        const nodesContainer = document.getElementById('nodes-container');
+        const loadJsonBtn = document.getElementById('load-json-btn');
+        const addNodeBtn = document.getElementById('add-node-btn');
+        const generateJsonBtn = document.getElementById('generate-json-btn');
+        const outputJsonTextarea = document.getElementById('output-json');
+        const jsonValidationError = document.getElementById('json-validation-error');
+
+        // --- Core Functions ---
+        async function loadConversationFile() {
+            try {
+                const response = await fetch('conversation.json'); // Assuming it's in the same directory
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                conversationData = await response.json();
+                renderNodes();
+                outputJsonTextarea.value = 'Loaded. Make changes and click "Generate JSON to Copy".';
+                jsonValidationError.style.display = 'none';
+            } catch (error) {
+                console.error("Could not load conversation.json:", error);
+                outputJsonTextarea.value = `Error loading conversation.json: ${error.message}`;
+                alert(`Error loading conversation.json: ${error.message}\nMake sure the file exists and is valid JSON.`);
+            }
+        }
+
+        function renderNodes() {
+            nodesContainer.innerHTML = ''; // Clear existing nodes
+            for (const nodeId in conversationData) {
+                if (conversationData.hasOwnProperty(nodeId)) {
+                    nodesContainer.appendChild(createNodeElement(nodeId, conversationData[nodeId]));
+                }
+            }
+        }
+
+        function createNodeElement(nodeId, nodeData) {
+            const nodeDiv = document.createElement('div');
+            nodeDiv.classList.add('node');
+            nodeDiv.dataset.nodeId = nodeId; // Store nodeId for later reference
+
+            // Node ID (editable)
+            const idLabel = document.createElement('label');
+            idLabel.textContent = 'Node ID:';
+            const idInput = document.createElement('input');
+            idInput.type = 'text';
+            idInput.value = nodeId;
+            idInput.classList.add('node-id-input'); // For identifying this input
+            idInput.addEventListener('change', (e) => updateNodeId(nodeDiv.dataset.nodeId, e.target.value));
+            nodeDiv.appendChild(idLabel);
+            nodeDiv.appendChild(idInput);
+
+
+            // Sprite Text
+            nodeDiv.appendChild(createEditableField('sprite_text', nodeData.sprite_text || '', 'Sprite Text:', 'textarea'));
+            // Sprite Image
+            nodeDiv.appendChild(createEditableField('sprite_image', nodeData.sprite_image || '', 'Sprite Image URL:'));
+
+            // --- Choices or Entry Mode ---
+            if (nodeData.choices) {
+                const choicesDiv = document.createElement('div');
+                choicesDiv.classList.add('choices-list');
+                choicesDiv.innerHTML = '<h3>Choices:</h3>';
+                nodeData.choices.forEach((choice, index) => {
+                    choicesDiv.appendChild(createChoiceElement(nodeId, choice, index));
+                });
+                const addChoiceBtn = document.createElement('button');
+                addChoiceBtn.textContent = 'Add Choice';
+                addChoiceBtn.classList.add('add-button');
+                addChoiceBtn.onclick = () => addChoice(nodeId);
+                choicesDiv.appendChild(addChoiceBtn);
+                nodeDiv.appendChild(choicesDiv);
+            } else if (nodeData.entry_mode) {
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('entry-mode-details');
+                entryDiv.innerHTML = '<h3>Entry Mode:</h3>';
+                entryDiv.appendChild(createEditableField('entry_mode.prompt_text', nodeData.entry_mode.prompt_text || '', 'Prompt Text for Input:'));
+                
+                const secretsListDiv = document.createElement('div');
+                secretsListDiv.classList.add('secrets-list');
+                secretsListDiv.innerHTML = '<h4>Secrets:</h4>';
+                if (nodeData.entry_mode.secrets) {
+                    nodeData.entry_mode.secrets.forEach((secret, index) => {
+                        secretsListDiv.appendChild(createSecretElement(nodeId, secret, index));
+                    });
+                }
+                const addSecretBtn = document.createElement('button');
+                addSecretBtn.textContent = 'Add Secret';
+                addSecretBtn.classList.add('add-button');
+                addSecretBtn.onclick = () => addSecret(nodeId);
+                secretsListDiv.appendChild(addSecretBtn);
+                entryDiv.appendChild(secretsListDiv);
+
+                entryDiv.appendChild(createEditableField('entry_mode.default_next_node_id', nodeData.entry_mode.default_next_node_id || '', 'Default Next Node ID (if no secret matches):'));
+                nodeDiv.appendChild(entryDiv);
+            } else {
+                // Option to add either choices or entry_mode
+                const addChoicesBtn = document.createElement('button');
+                addChoicesBtn.textContent = 'Add Choices Section';
+                addChoicesBtn.onclick = () => convertToChoicesNode(nodeId);
+                nodeDiv.appendChild(addChoicesBtn);
+
+                const addEntryModeBtn = document.createElement('button');
+                addEntryModeBtn.textContent = 'Add Entry Mode Section';
+                addEntryModeBtn.onclick = () => convertToEntryNode(nodeId);
+                nodeDiv.appendChild(addEntryModeBtn);
+            }
+            
+            // Remove Node Button
+            const removeNodeBtn = document.createElement('button');
+            removeNodeBtn.textContent = 'Remove This Node';
+            removeNodeBtn.classList.add('remove-button');
+            removeNodeBtn.onclick = () => removeNode(nodeId);
+            nodeDiv.appendChild(removeNodeBtn);
+
+            return nodeDiv;
+        }
+        
+        function updateNodeId(oldNodeId, newNodeId) {
+            if (oldNodeId === newNodeId) return;
+            if (conversationData.hasOwnProperty(newNodeId)) {
+                alert(`Error: Node ID "${newNodeId}" already exists! Choose a unique ID.`);
+                // Re-render to revert the input field value (or find the input and revert it)
+                const oldInput = document.querySelector(`.node[data-node-id="${oldNodeId}"] .node-id-input`);
+                if(oldInput) oldInput.value = oldNodeId;
+                return;
+            }
+            const nodeData = conversationData[oldNodeId];
+            delete conversationData[oldNodeId];
+            conversationData[newNodeId] = nodeData;
+            
+            // Update the dataset.nodeId on the div element itself for future reference
+            const nodeDiv = document.querySelector(`.node[data-node-id="${oldNodeId}"]`);
+            if (nodeDiv) nodeDiv.dataset.nodeId = newNodeId;
+
+            // Potentially need to update next_node_id references in other nodes (more advanced)
+            console.log(`Node ID changed from ${oldNodeId} to ${newNodeId}. Consider updating references.`);
+        }
+
+
+        function createEditableField(key, value, labelText, type = 'text') {
+            const fieldContainer = document.createElement('div');
+            const label = document.createElement('label');
+            label.textContent = labelText;
+            fieldContainer.appendChild(label);
+
+            let input;
+            if (type === 'textarea') {
+                input = document.createElement('textarea');
+            } else {
+                input = document.createElement('input');
+                input.type = type;
+            }
+            input.value = value;
+            input.dataset.key = key; // e.g., "sprite_text" or "entry_mode.prompt_text"
+            input.addEventListener('change', (e) => {
+                const nodeId = e.target.closest('.node').dataset.nodeId;
+                updateNodeData(nodeId, e.target.dataset.key, e.target.value);
+            });
+            fieldContainer.appendChild(input);
+            return fieldContainer;
+        }
+
+        function createChoiceElement(nodeId, choiceData, choiceIndex) {
+            const choiceDiv = document.createElement('div');
+            choiceDiv.classList.add('choice-item');
+            choiceDiv.appendChild(createEditableField(`choices[${choiceIndex}].text`, choiceData.text || '', 'Button Text:'));
+            choiceDiv.appendChild(createEditableField(`choices[${choiceIndex}].next_node_id`, choiceData.next_node_id || '', 'Next Node ID:'));
+            choiceDiv.appendChild(createEditableField(`choices[${choiceIndex}].item`, choiceData.item || '', 'Item (optional):'));
+            choiceDiv.appendChild(createEditableField(`choices[${choiceIndex}].action`, choiceData.action || '', 'Action (e.g., end_conversation, optional):'));
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove Choice';
+            removeBtn.classList.add('remove-button');
+            removeBtn.onclick = () => removeChoice(nodeId, choiceIndex);
+            choiceDiv.appendChild(removeBtn);
+            return choiceDiv;
+        }
+
+        function createSecretElement(nodeId, secretData, secretIndex) {
+            const secretDiv = document.createElement('div');
+            secretDiv.classList.add('secret-item');
+            secretDiv.appendChild(createEditableField(`entry_mode.secrets[${secretIndex}].input`, secretData.input || '', 'Secret Input Text:'));
+            secretDiv.appendChild(createEditableField(`entry_mode.secrets[${secretIndex}].next_node_id`, secretData.next_node_id || '', 'Next Node ID for this Secret:'));
+
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove Secret';
+            removeBtn.classList.add('remove-button');
+            removeBtn.onclick = () => removeSecret(nodeId, secretIndex);
+            secretDiv.appendChild(removeBtn);
+            return secretDiv;
+        }
+        
+        // --- Data Update Functions ---
+        function updateNodeData(nodeId, keyPath, value) {
+            // Helper to set nested properties like "entry_mode.prompt_text"
+            const keys = keyPath.split(/[.\[\]]+/).filter(Boolean); // Split by . or [] and remove empty strings
+            let current = conversationData[nodeId];
+            for (let i = 0; i < keys.length - 1; i++) {
+                const key = keys[i];
+                const nextKeyIsArrayIndex = /^\d+$/.test(keys[i+1]);
+                if (!current[key]) {
+                    current[key] = nextKeyIsArrayIndex ? [] : {};
+                }
+                current = current[key];
+            }
+            // Handle empty strings for optional fields: if value is empty, consider deleting the key
+            if (value === '' && (keyPath.endsWith('.item') || keyPath.endsWith('.action') || keyPath.endsWith('.sprite_image') || keyPath.endsWith('default_next_node_id') || keyPath.endsWith('prompt_text'))) {
+                 delete current[keys[keys.length - 1]];
+            } else {
+                current[keys[keys.length - 1]] = value;
+            }
+            // Clean up empty objects/arrays if necessary (e.g., if all secrets are removed)
+            if (keyPath.startsWith('entry_mode.secrets') && conversationData[nodeId].entry_mode && conversationData[nodeId].entry_mode.secrets && conversationData[nodeId].entry_mode.secrets.length === 0) {
+                delete conversationData[nodeId].entry_mode.secrets;
+            }
+             if (keyPath.startsWith('choices') && conversationData[nodeId].choices && conversationData[nodeId].choices.length === 0) {
+                delete conversationData[nodeId].choices;
+            }
+            console.log('Updated conversationData:', conversationData);
+        }
+
+
+        function addNewNode() {
+            let newNodeId = `newNode${Object.keys(conversationData).length + 1}`;
+            while(conversationData.hasOwnProperty(newNodeId)) { // Ensure unique ID
+                 newNodeId = `newNode${Math.floor(Math.random() * 10000)}`;
+            }
+            conversationData[newNodeId] = {
+                sprite_text: "New node text...",
+                sprite_image: "",
+                // Initially no choices or entry_mode, user can add them
+            };
+            renderNodes(); // Re-render to show the new node
+        }
+        
+        function removeNode(nodeId) {
+            if (confirm(`Are you sure you want to remove node "${nodeId}"? This cannot be undone easily.`)) {
+                delete conversationData[nodeId];
+                renderNodes();
+            }
+        }
+
+
+        function addChoice(nodeId) {
+            if (!conversationData[nodeId].choices) {
+                conversationData[nodeId].choices = [];
+            }
+            conversationData[nodeId].choices.push({ text: "New Choice", next_node_id: "" });
+            renderNodes();
+        }
+        
+        function removeChoice(nodeId, choiceIndex) {
+            conversationData[nodeId].choices.splice(choiceIndex, 1);
+            if (conversationData[nodeId].choices.length === 0) {
+                 delete conversationData[nodeId].choices; // Remove empty choices array
+            }
+            renderNodes();
+        }
+
+        function addSecret(nodeId) {
+            if (!conversationData[nodeId].entry_mode) { // Should not happen if button is shown correctly
+                convertToEntryNode(nodeId); // Convert if somehow it's not an entry node
+            }
+             if (!conversationData[nodeId].entry_mode.secrets) {
+                conversationData[nodeId].entry_mode.secrets = [];
+            }
+            conversationData[nodeId].entry_mode.secrets.push({ input: "secret phrase", next_node_id: "" });
+            renderNodes();
+        }
+
+        function removeSecret(nodeId, secretIndex) {
+            conversationData[nodeId].entry_mode.secrets.splice(secretIndex, 1);
+             if (conversationData[nodeId].entry_mode.secrets.length === 0) {
+                 delete conversationData[nodeId].entry_mode.secrets; // Remove empty secrets array
+            }
+            renderNodes();
+        }
+        
+        function convertToChoicesNode(nodeId) {
+            delete conversationData[nodeId].entry_mode; // Remove entry_mode if it exists
+            conversationData[nodeId].choices = [{ text: "New Choice", next_node_id: "" }];
+            renderNodes();
+        }
+
+        function convertToEntryNode(nodeId) {
+            delete conversationData[nodeId].choices; // Remove choices if they exist
+            conversationData[nodeId].entry_mode = {
+                prompt_text: "Enter something:",
+                secrets: [{ input: "secret", next_node_id: "" }],
+                default_next_node_id: ""
+            };
+            renderNodes();
+        }
+
+
+        function generateAndDisplayJson() {
+            try {
+                // Create a clean copy for stringify to avoid functions/undefined if any crept in
+                const cleanData = JSON.parse(JSON.stringify(conversationData));
+                const jsonString = JSON.stringify(cleanData, null, 2); // Pretty print
+                outputJsonTextarea.value = jsonString;
+                jsonValidationError.style.display = 'none';
+                outputJsonTextarea.readOnly = false; // Allow selection/copy
+                outputJsonTextarea.focus();
+                outputJsonTextarea.select(); // Auto-select for easy copying
+                // alert("JSON generated in the text area below. You can now copy it.");
+            } catch (e) {
+                console.error("Error generating JSON:", e);
+                outputJsonTextarea.value = `Error: Could not generate valid JSON. ${e.message}`;
+                jsonValidationError.textContent = `Error: Could not generate valid JSON. ${e.message}`;
+                jsonValidationError.style.display = 'block';
+            }
+        }
+
+        // --- Event Listeners ---
+        loadJsonBtn.addEventListener('click', loadConversationFile);
+        addNodeBtn.addEventListener('click', addNewNode);
+        generateJsonBtn.addEventListener('click', generateAndDisplayJson);
+
+        // Optionally load automatically on page load
+        // window.addEventListener('DOMContentLoaded', loadConversationFile);
+
+    </script>
+</body>
+</html>

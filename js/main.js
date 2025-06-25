@@ -153,7 +153,6 @@ if (coffeeTextInput) {
 }
 
 function handleChoice (choice)  {
-
     if (choice.item) {
         currentItem = choice.item;
     }
@@ -174,8 +173,13 @@ function handleChoice (choice)  {
         }
         if (choice.action == "increase_spare") {
             sparing_numbers ++;
-            if (increase_sparing_numbers > 10) {
-                displayNode("give")
+            console.log(sparing_numbers);
+            if (sparing_numbers >= 10) {
+                displayNode("give");
+            }
+            else {
+                hideCoffeeModal();
+                currentNodeId = null;
             }
         }
         if (choice.action == "kill") {
@@ -187,7 +191,7 @@ function handleChoice (choice)  {
                 displayNode("give")
             }
             else {
-                displayNode("kill")
+                displayNode("give_failed")
             }
         }
         if (choice.action == "check_cappuccino") {
@@ -195,7 +199,7 @@ function handleChoice (choice)  {
                 displayNode("give")
             }
             else {
-                displayNode("kill")
+                displayNode("give_failed")
             }
         }
         if (choice.action == "check_latte") {
@@ -203,13 +207,20 @@ function handleChoice (choice)  {
                 displayNode("give")
             }
             else {
-                displayNode("kill")
+                displayNode("give_failed")
             }
         }
+        if (choice.action == "website") {
+            window.open(choice.item)
+        }
+        if (choice.action == "clear_inventory") {
+            inventory = [];
+        } 
+
         
     }
 
-    else if (choice.next_node_id) {
+    if (choice.next_node_id && currentNodeId != null) {
         displayNode(choice.next_node_id);
     }
     else {

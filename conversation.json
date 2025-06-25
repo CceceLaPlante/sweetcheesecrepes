@@ -366,10 +366,6 @@
       {
         "text": "next question",
         "next_node_id": "couleur_pref"
-      },
-      {
-        "text": "New Choice",
-        "next_node_id": ""
       }
     ]
   },
@@ -612,7 +608,7 @@
       {
         "text": "capucino",
         "next_node_id": "",
-        "action": "check_capucino"
+        "action": "check_cappuccino"
       },
       {
         "text": "latte",
@@ -648,7 +644,7 @@
     "sprite_text": "mh... o...okay ? you should try out this website ^^'",
     "sprite_image": "",
     "editor_pos": [
-      1556.964636961872,
+      1557.964636961872,
       1592.2473916635065
     ],
     "choices": [

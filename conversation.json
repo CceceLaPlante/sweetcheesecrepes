@@ -21,8 +21,8 @@
       }
     ],
     "editor_pos": [
-      644.7166971884552,
-      394.7802218324287
+      377.8343218812198,
+      65.47451128383977
     ]
   },
   "ask_type": {
@@ -32,17 +32,20 @@
       {
         "text": "Espresso",
         "next_node_id": "confirm_order",
-        "item": "Espresso"
+        "item": "Espresso",
+        "action": "save_espresso"
       },
       {
         "text": "Latte",
         "next_node_id": "confirm_order",
-        "item": "Latte"
+        "item": "Latte",
+        "action": "save_latte"
       },
       {
         "text": "Cappuccino",
         "next_node_id": "confirm_order",
-        "item": "Cappuccino"
+        "item": "Cappuccino",
+        "action": "save_cappuccino"
       },
       {
         "text": "hugh, no starbucks grande ? nevermind then...",
@@ -50,8 +53,8 @@
       }
     ],
     "editor_pos": [
-      977.8642169250733,
-      233.73061949320396
+      933.5346020435323,
+      211.11346904343824
     ]
   },
   "confirm_order": {
@@ -64,12 +67,13 @@
       },
       {
         "text": "Too expensive!",
-        "next_node_id": "too_expensive"
+        "next_node_id": "too_expensive",
+        "action": "clear_inventory"
       }
     ],
     "editor_pos": [
-      1337.4803633631577,
-      105.25373949866821
+      1285.9132603376918,
+      75.39910090497746
     ]
   },
   "payment": {
@@ -82,8 +86,8 @@
       }
     ],
     "editor_pos": [
-      1478.51307970767,
-      277.37313025066595
+      1654.9268532158426,
+      89.1984385086152
     ]
   },
   "too_expensive": {
@@ -96,8 +100,8 @@
       }
     ],
     "editor_pos": [
-      1015.4299569701523,
-      51.908339594290226
+      938.5316454409488,
+      70.0020599541028
     ]
   },
   "farewell": {
@@ -110,8 +114,8 @@
       }
     ],
     "editor_pos": [
-      681.7856425440083,
-      77.33506827303663
+      645.5982018243831,
+      65.57415003915845
     ]
   },
   "code_entry": {
@@ -127,17 +131,21 @@
         {
           "input": "pute",
           "next_node_id": "razane"
+        },
+        {
+          "input": "33424924",
+          "next_node_id": "true_success"
         }
       ],
       "default_next_node_id": "code_fail"
     },
     "editor_pos": [
-      1320.7702560691732,
-      598.9212785854792
+      1277.3453272056229,
+      461.40900385090373
     ]
   },
   "ask_for_secret_drink": {
-    "sprite_text": "Oh wah, a connoisseur, and what is it name ?",
+    "sprite_text": "mmmh, a connoisseur, and what is it name ?",
     "sprite_image": "images/madam_conspiratorial.png",
     "entry_mode": {
       "prompt_text": "Whisper the name:",
@@ -154,8 +162,8 @@
       "default_next_node_id": "ask_for_secret_drink_fail"
     },
     "editor_pos": [
-      202.16007308603957,
-      300.45762835801145
+      563.1297942643005,
+      414.44806662483063
     ]
   },
   "ask_for_secret_drink_fail": {
@@ -172,8 +180,8 @@
       }
     ],
     "editor_pos": [
-      123.58991872139896,
-      57.51314800901575
+      124.49460473938959,
+      67.46469420691265
     ]
   },
   "secret_drink_reveal": {
@@ -190,16 +198,16 @@
       }
     ],
     "editor_pos": [
-      245.54012704050263,
-      605.2551738269244
+      558.5614892652601,
+      618.8254640967839
     ]
   },
   "razane": {
     "sprite_text": "razane tu me déprime...",
     "sprite_image": "",
     "editor_pos": [
-      628.1244308846856,
-      617.4409426521687
+      1269.5468176400414,
+      309.847696535355
     ],
     "choices": [
       {
@@ -213,8 +221,8 @@
     "sprite_text": "arh, no, sorry ^^'",
     "sprite_image": "madam_sorry.png",
     "editor_pos": [
-      966.4055773510793,
-      725.9480693219072
+      970.0243214230417,
+      922.2649352258736
     ],
     "choices": [
       {
@@ -224,6 +232,10 @@
       {
         "text": "i think this question is too difficult for my little brain",
         "next_node_id": "farewell"
+      },
+      {
+        "text": "HELP give me a clue i am begging you ",
+        "next_node_id": "help_drawing"
       }
     ]
   },
@@ -231,8 +243,8 @@
     "sprite_text": "fine... you get to try again...",
     "sprite_image": "madam_depite.png",
     "editor_pos": [
-      1385.443099708806,
-      828.164187789494
+      972.9062755050791,
+      559.4724404462772
     ],
     "choices": [
       {
@@ -245,8 +257,8 @@
     "sprite_text": "annw you paid attention ? that's so cute thank's !! <3",
     "sprite_image": "",
     "editor_pos": [
-      551.7904301927696,
-      1116.856536719895
+      561.7419763906664,
+      997.4379823451322
     ],
     "choices": [
       {
@@ -258,8 +270,8 @@
   "fav_drawing": {
     "sprite_text": "oooowkay so\nFirst question : \nWhat is my favourite drawing ?",
     "editor_pos": [
-      568.5236145562975,
-      858.1542485632922
+      564.904870484335,
+      802.0637154478732
     ],
     "entry_mode": {
       "prompt_text": "favourite drawing",
@@ -297,16 +309,17 @@
     }
   },
   "code_success": {
-    "sprite_text": "I am so sorry the surprise is underconstruction ^^'",
+    "sprite_text": "anw you have a good memory ! it's not the code anymore ^^' but well played !!",
     "sprite_image": "",
     "editor_pos": [
-      1924.0,
-      715.0
+      1604.645835649308,
+      372.1239991815517
     ],
     "choices": [
       {
         "text": "ah...",
-        "next_node_id": ""
+        "next_node_id": "",
+        "item": "end_conversation"
       }
     ]
   },
@@ -314,8 +327,8 @@
     "sprite_text": "bahahahah you impatient cutie pie, okay, second question then\nwhat is my favourite coding project ?",
     "sprite_image": "",
     "editor_pos": [
-      616.0,
-      1353.0
+      563.5282109565435,
+      1177.4909125098181
     ],
     "entry_mode": {
       "secrets": [
@@ -332,8 +345,8 @@
     "sprite_text": "how egocentric ! we're not talking about you !!",
     "sprite_image": "madam_upset.png",
     "editor_pos": [
-      1089.0,
-      1015.0
+      976.8189337691618,
+      679.3614873254768
     ],
     "choices": [
       {
@@ -345,12 +358,15 @@
   },
   "fav_code_success": {
     "sprite_text": "annnwwwwwwwww okay it's not a coding project but i accept this answer",
-    "sprite_image": "",
     "editor_pos": [
-      524.0,
-      1622.0
+      563.0430600773988,
+      1371.9397930905811
     ],
     "choices": [
+      {
+        "text": "next question",
+        "next_node_id": "couleur_pref"
+      },
       {
         "text": "New Choice",
         "next_node_id": ""
@@ -360,14 +376,18 @@
   "fav_code_failed": {
     "sprite_text": "no im sorry ^^'",
     "editor_pos": [
-      1113.9403292181066,
-      1552.1296296296298
+      973.713996429559,
+      1177.5896181815096
     ],
     "sprite_image": "madam_sorry.png",
     "choices": [
       {
         "text": "let me try again !",
         "next_node_id": "fav_code"
+      },
+      {
+        "text": "HELP I NEED A CLUE FLKQSDB",
+        "next_node_id": "help_code"
       }
     ]
   },
@@ -375,13 +395,326 @@
     "sprite_text": "how pesimistic !!! maybe one day i will have a favourite drawing !",
     "sprite_image": "madam_upset.png",
     "editor_pos": [
-      1169.0,
-      1263.0
+      969.9690760420617,
+      799.8007587887981
     ],
     "choices": [
       {
         "text": "try again",
         "next_node_id": "fav_drawing"
+      }
+    ]
+  },
+  "couleur_pref": {
+    "sprite_text": "ookay for the final question, what is my favourite color ?",
+    "sprite_image": "",
+    "editor_pos": [
+      557.9254877784994,
+      1575.5685988579046
+    ],
+    "entry_mode": {
+      "prompt_text": "fav color...",
+      "secrets": [
+        {
+          "input": "purpulish blue",
+          "next_node_id": "couleur_fav_success"
+        }
+      ],
+      "default_next_node_id": "couleur_fav_failed"
+    }
+  },
+  "couleur_fav_failed": {
+    "sprite_text": "nice try !\n...\nbut no",
+    "sprite_image": "",
+    "editor_pos": [
+      885.6876116128254,
+      1577.7724153756565
+    ],
+    "choices": [
+      {
+        "text": "retry",
+        "next_node_id": "couleur_pref"
+      }
+    ]
+  },
+  "couleur_fav_success": {
+    "sprite_text": "!!!! OMG you did it !!! ggs !!! anyway i've already gave you the code ^^",
+    "sprite_image": "",
+    "editor_pos": [
+      562.7147031901712,
+      1756.9002469378008
+    ],
+    "choices": [
+      {
+        "text": "i am gonna kill you",
+        "next_node_id": "kill"
+      },
+      {
+        "text": "i've got the code",
+        "next_node_id": "code_entry"
+      }
+    ]
+  },
+  "help_drawing": {
+    "sprite_text": "mh okay, you must know that everything you need to know is on the art page ! furthermore, the answer is not a drawing's title !",
+    "sprite_image": "",
+    "editor_pos": [
+      969.8234112859541,
+      1045.8170367971672
+    ],
+    "choices": [
+      {
+        "text": "retry",
+        "next_node_id": "fav_drawing"
+      }
+    ]
+  },
+  "help_code": {
+    "sprite_text": "mmh, okay, you should find a way to explore more of my coding project ...",
+    "sprite_image": "",
+    "editor_pos": [
+      983.3937015558135,
+      1319.0322142303369
+    ],
+    "choices": [
+      {
+        "text": "ok.... -_-",
+        "next_node_id": "fav_code"
+      },
+      {
+        "text": "New Choice",
+        "next_node_id": ""
+      }
+    ]
+  },
+  "true_success": {
+    "sprite_text": "I am impressed ! i must congratulate you !!!! ggs !!!! im so sorry but you've been faster than me, i didn't finished the surprise... stay tunned and comeback later !",
+    "editor_pos": [
+      1608.531739987338,
+      491.24450776891126
+    ],
+    "choices": [
+      {
+        "text": "fqdsfdpsqbfq ;( ;( ;( ",
+        "next_node_id": "",
+        "action": "end_conversation"
+      }
+    ]
+  },
+  "kill": {
+    "sprite_text": "what do you want to do..?",
+    "sprite_image": "",
+    "editor_pos": [
+      891.1157277207693,
+      1759.6143049917728
+    ],
+    "choices": [
+      {
+        "text": "FIGHT",
+        "next_node_id": "fight"
+      },
+      {
+        "text": "ACT",
+        "next_node_id": "act"
+      },
+      {
+        "text": "ITEM",
+        "next_node_id": "item"
+      },
+      {
+        "text": "SPARE",
+        "next_node_id": "spare"
+      }
+    ]
+  },
+  "fight": {
+    "sprite_text": "you.... you sure of what you're doing ??",
+    "sprite_image": "",
+    "editor_pos": [
+      1256.6088789889834,
+      1588.628647591544
+    ],
+    "choices": [
+      {
+        "text": "yes, *attack*",
+        "next_node_id": "",
+        "action": "kill"
+      },
+      {
+        "text": "wait...",
+        "next_node_id": "kill"
+      }
+    ]
+  },
+  "act": {
+    "sprite_text": ".",
+    "sprite_image": "",
+    "editor_pos": [
+      1250.2760768630487,
+      1717.0940621462132
+    ],
+    "choices": [
+      {
+        "text": "seduce",
+        "next_node_id": "seduce"
+      },
+      {
+        "text": "beg",
+        "next_node_id": "beg"
+      },
+      {
+        "text": "have a deep talk about life and friendship",
+        "next_node_id": "deep_talk"
+      }
+    ]
+  },
+  "spare": {
+    "sprite_text": "spare ?",
+    "sprite_image": "",
+    "editor_pos": [
+      1245.7526467730956,
+      1964.073345057655
+    ],
+    "choices": [
+      {
+        "text": "yes",
+        "next_node_id": "",
+        "action": "increase_spare"
+      },
+      {
+        "text": "no",
+        "next_node_id": "kill"
+      }
+    ]
+  },
+  "give": {
+    "sprite_text": "thank's... \nfor a moment i was very afraid you actually wanted to fight..\n\nokay, here is a clue, the key is in the repetitions.",
+    "sprite_image": "",
+    "editor_pos": [
+      1869.9859991866297,
+      1157.9981030280046
+    ],
+    "choices": [
+      {
+        "text": "thank's",
+        "next_node_id": "ask_for_secret_drink"
+      }
+    ]
+  },
+  "item": {
+    "sprite_text": "Oh a gift ?",
+    "sprite_image": "",
+    "editor_pos": [
+      1242.1339027011331,
+      1850.0829067908358
+    ],
+    "choices": [
+      {
+        "text": "capucino",
+        "next_node_id": "",
+        "action": "check_capucino"
+      },
+      {
+        "text": "latte",
+        "next_node_id": "",
+        "action": "check_latte"
+      },
+      {
+        "text": "espresso",
+        "next_node_id": "",
+        "action": "check_espresso"
+      },
+      {
+        "text": "back",
+        "next_node_id": "kill"
+      }
+    ]
+  },
+  "give_failed": {
+    "sprite_text": "you don't have anything to give me...",
+    "sprite_image": "",
+    "editor_pos": [
+      1349.7915388420179,
+      1278.3213434207585
+    ],
+    "choices": [
+      {
+        "text": "back",
+        "next_node_id": "kill"
+      }
+    ]
+  },
+  "deep_talk": {
+    "sprite_text": "mh... o...okay ? you should try out this website ^^'",
+    "sprite_image": "",
+    "editor_pos": [
+      1556.964636961872,
+      1592.2473916635065
+    ],
+    "choices": [
+      {
+        "text": "click",
+        "next_node_id": "",
+        "item": "https://www.ted.com/about/conferences/speaking-at-ted",
+        "action": "website"
+      }
+    ]
+  },
+  "beg": {
+    "sprite_text": "uuhm... i... \nokay, i mean, i can give you a clue if you want",
+    "sprite_image": "",
+    "editor_pos": [
+      1555.1552649258906,
+      1719.8081202001854
+    ],
+    "choices": [
+      {
+        "text": "yes please *knee*",
+        "next_node_id": "begging_more"
+      }
+    ]
+  },
+  "seduce": {
+    "sprite_text": "wtf you creep",
+    "sprite_image": "",
+    "editor_pos": [
+      1552.441206871919,
+      1842.8454186469107
+    ],
+    "choices": [
+      {
+        "text": "noticing this was maybe a bit akward",
+        "next_node_id": "",
+        "action": "end_conversation"
+      }
+    ]
+  },
+  "begging_more": {
+    "sprite_text": "okaaayy, well, the clue is .... 696E206469616C6F6773205E5E\noh no, it's corrupted... how sad... :)",
+    "sprite_image": "",
+    "editor_pos": [
+      1823.8470122691074,
+      1726.1409223261196
+    ],
+    "choices": [
+      {
+        "text": "...",
+        "next_node_id": "",
+        "action": "end_conversation"
+      }
+    ]
+  },
+  "killed": {
+    "sprite_text": "but no one showed up...",
+    "editor_pos": [
+      1880.8422314025167,
+      863.9751471810505
+    ],
+    "choices": [
+      {
+        "text": ".",
+        "next_node_id": "",
+        "action": "end_conversation"
       }
     ]
   }

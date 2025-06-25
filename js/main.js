@@ -26,8 +26,16 @@ let conversationData = null ;
 let currentNodeId = null;
 let currentItem = null;
 let entryAnswer = null;
+let inventory = []; 
+let sparing_numbers = 0;
+let killed = false;
 
 function displayNode (nodeId) {
+
+    if (killed) { 
+        nodeId = "killed";
+    }
+
     if (!conversationData || !conversationData[nodeId]) {
         console.error(`Node "${nodeId}" not found in conversation data.`);
         if (coffeeDialogText) {
@@ -38,8 +46,11 @@ function displayNode (nodeId) {
 
     currentNodeId = nodeId;
     const node = conversationData[nodeId];
-
-    if (node.sprite_image && coffeeSprite) {
+    
+    if (killed) {
+        coffeeSprite.src = "";
+    }
+    else if (node.sprite_image && coffeeSprite) {
         /*coffeeSprite.src = node.sprite_image;*/
         coffeeSprite.src = "images/madam.png";
         coffeeSprite.alt = "madame"; 
@@ -152,6 +163,50 @@ function handleChoice (choice)  {
             hideCoffeeModal();
             currentNodeId=null;
         }
+        if (choice.action == "save_espresso") {
+            inventory.push("espresso");
+        }
+        if (choice.action == "save_cappuccino") {
+            inventory.push("cappuccino");
+        }
+        if (choice.action == "save_latte") {
+            inventory.push("latte");
+        }
+        if (choice.action == "increase_spare") {
+            sparing_numbers ++;
+            if (increase_sparing_numbers > 10) {
+                displayNode("give")
+            }
+        }
+        if (choice.action == "kill") {
+            killed = true; 
+            hideCoffeeModal();
+        }
+        if (choice.action == "check_espresso") {
+            if (inventory.includes("espresso")) {
+                displayNode("give")
+            }
+            else {
+                displayNode("kill")
+            }
+        }
+        if (choice.action == "check_cappuccino") {
+            if (inventory.includes("cappuccino")) {
+                displayNode("give")
+            }
+            else {
+                displayNode("kill")
+            }
+        }
+        if (choice.action == "check_latte") {
+            if (inventory.includes("latte")) {
+                displayNode("give")
+            }
+            else {
+                displayNode("kill")
+            }
+        }
+        
     }
 
     else if (choice.next_node_id) {

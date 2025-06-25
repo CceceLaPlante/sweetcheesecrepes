@@ -679,7 +679,7 @@
     ],
     "choices": [
       {
-        "text": "noticing this was maybe a bit akward",
+        "text": "noticing this was maybe a bit awkward",
         "next_node_id": "",
         "action": "end_conversation"
       }

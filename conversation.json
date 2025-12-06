@@ -135,13 +135,25 @@
         {
           "input": "33424924",
           "next_node_id": "true_success"
+        },
+        {
+          "input": "35892639",
+          "next_node_id": "couleur_fav_success"
+        },
+        {
+          "input": "89320837",
+          "next_node_id": "couleur_pref"
+        },
+        {
+          "input": "972817236",
+          "next_node_id": "fav_code"
         }
       ],
       "default_next_node_id": "code_fail"
     },
     "editor_pos": [
-      1277.3453272056229,
-      461.40900385090373
+      1540.3453272056229,
+      856.4090038509037
     ]
   },
   "ask_for_secret_drink": {
@@ -324,11 +336,11 @@
     ]
   },
   "fav_code": {
-    "sprite_text": "bahahahah you impatient cutie pie, okay, second question then\nwhat is my favourite coding project ?",
+    "sprite_text": "bahahahah you impatient cutie pie, okay, second question then\nwhat is my favourite coding project ?\n\ncheckpoint: 972817236",
     "sprite_image": "",
     "editor_pos": [
       563.5282109565435,
-      1177.4909125098181
+      1176.4909125098181
     ],
     "entry_mode": {
       "secrets": [
@@ -357,10 +369,10 @@
     ]
   },
   "fav_code_success": {
-    "sprite_text": "annnwwwwwwwww okay it's not a coding project but i accept this answer",
+    "sprite_text": "anwwwwwwwww okay it's not a coding project but i accept this answer",
     "editor_pos": [
-      563.0430600773988,
-      1371.9397930905811
+      557.722963480003,
+      1373.7131586230464
     ],
     "choices": [
       {
@@ -402,7 +414,7 @@
     ]
   },
   "couleur_pref": {
-    "sprite_text": "ookay for the final question, what is my favourite color ?",
+    "sprite_text": "ookay for the final question, what is my favourite color ?\n\ncheckpoint : 89320837",
     "sprite_image": "",
     "editor_pos": [
       557.9254877784994,
@@ -434,11 +446,10 @@
     ]
   },
   "couleur_fav_success": {
-    "sprite_text": "!!!! OMG you did it !!! ggs !!! anyway i've already gave you the code ^^",
-    "sprite_image": "",
+    "sprite_text": "!!!! OMG you did it !!! ggs !!! anyway i've already gave you the code ^^\n\ncheckpoint : 35892639",
     "editor_pos": [
       562.7147031901712,
-      1756.9002469378008
+      1759.9002469378008
     ],
     "choices": [
       {
@@ -587,8 +598,8 @@
     "sprite_text": "thank's... \nfor a moment i was very afraid you actually wanted to fight..\n\nokay, here is a clue, the key is in the repetitions.",
     "sprite_image": "",
     "editor_pos": [
-      1869.9859991866297,
-      1157.9981030280046
+      2027.9859991866297,
+      769.9981030280046
     ],
     "choices": [
       {
@@ -630,8 +641,8 @@
     "sprite_text": "you don't have anything to give me...",
     "sprite_image": "",
     "editor_pos": [
-      1349.7915388420179,
-      1278.3213434207585
+      1388.7915388420179,
+      1337.3213434207585
     ],
     "choices": [
       {
@@ -689,8 +700,8 @@
     "sprite_text": "okaaayy, well, the clue is .... 696E206469616C6F6773205E5E\noh no, it's corrupted... how sad... :)",
     "sprite_image": "",
     "editor_pos": [
-      1823.8470122691074,
-      1726.1409223261196
+      1819.8470122691074,
+      1730.1409223261196
     ],
     "choices": [
       {
@@ -703,14 +714,28 @@
   "killed": {
     "sprite_text": "but no one showed up...",
     "editor_pos": [
-      1880.8422314025167,
-      863.9751471810505
+      2130.8422314025165,
+      1353.9751471810505
     ],
     "choices": [
       {
         "text": ".",
         "next_node_id": "",
         "action": "end_conversation"
+      }
+    ]
+  },
+  "spare_success": {
+    "sprite_text": "so much DETERMINATION, okay i will give you a clue... this last riddle is pretty much like the art ! only the first word matters !",
+    "sprite_image": "",
+    "editor_pos": [
+      2031.0,
+      998.0
+    ],
+    "choices": [
+      {
+        "text": "thxs",
+        "next_node_id": "couleur_fav_success"
       }
     ]
   }

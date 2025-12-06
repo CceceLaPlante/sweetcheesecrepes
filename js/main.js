@@ -174,12 +174,15 @@ function handleChoice (choice)  {
         if (choice.action == "increase_spare") {
             sparing_numbers ++;
             console.log(sparing_numbers);
-            if (sparing_numbers >= 10) {
-                displayNode("give");
+            if (sparing_numbers >= 5) {
+                choice.next_node_id = "spare_success";
+                displayNode("spare_success");
             }
             else {
-                hideCoffeeModal();
-                currentNodeId = null;
+                //choice.text.concat("?");
+                conversationData[currentNodeId].sprite_text += "?";
+                choice.next_node_id = "kill";
+                displayNode("kill")
             }
         }
         if (choice.action == "kill") {
@@ -207,6 +210,7 @@ function handleChoice (choice)  {
                 displayNode("give")
             }
             else {
+
                 displayNode("give_failed")
             }
         }

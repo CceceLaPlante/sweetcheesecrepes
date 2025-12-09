@@ -26,8 +26,16 @@ let conversationData = null ;
 let currentNodeId = null;
 let currentItem = null;
 let entryAnswer = null;
+let inventory = []; 
+let sparing_numbers = 0;
+let killed = false;
 
 function displayNode (nodeId) {
+
+    if (killed) { 
+        nodeId = "killed";
+    }
+
     if (!conversationData || !conversationData[nodeId]) {
         console.error(`Node "${nodeId}" not found in conversation data.`);
         if (coffeeDialogText) {
@@ -38,8 +46,11 @@ function displayNode (nodeId) {
 
     currentNodeId = nodeId;
     const node = conversationData[nodeId];
-
-    if (node.sprite_image && coffeeSprite) {
+    
+    if (killed) {
+        coffeeSprite.src = "";
+    }
+    else if (node.sprite_image && coffeeSprite) {
         /*coffeeSprite.src = node.sprite_image;*/
         coffeeSprite.src = "images/madam.png";
         coffeeSprite.alt = "madame"; 
@@ -142,7 +153,6 @@ if (coffeeTextInput) {
 }
 
 function handleChoice (choice)  {
-
     if (choice.item) {
         currentItem = choice.item;
     }
@@ -152,9 +162,69 @@ function handleChoice (choice)  {
             hideCoffeeModal();
             currentNodeId=null;
         }
+        if (choice.action == "save_espresso") {
+            inventory.push("espresso");
+        }
+        if (choice.action == "save_cappuccino") {
+            inventory.push("cappuccino");
+        }
+        if (choice.action == "save_latte") {
+            inventory.push("latte");
+        }
+        if (choice.action == "increase_spare") {
+            sparing_numbers ++;
+            console.log(sparing_numbers);
+            if (sparing_numbers >= 5) {
+                choice.next_node_id = "spare_success";
+                displayNode("spare_success");
+            }
+            else {
+                //choice.text.concat("?");
+                conversationData[currentNodeId].sprite_text += "?";
+                choice.next_node_id = "kill";
+                displayNode("kill")
+            }
+        }
+        if (choice.action == "kill") {
+            killed = true; 
+            hideCoffeeModal();
+        }
+        if (choice.action == "check_espresso") {
+            if (inventory.includes("espresso")) {
+                displayNode("give")
+            }
+            else {
+                displayNode("give_failed")
+            }
+        }
+        if (choice.action == "check_cappuccino") {
+            if (inventory.includes("cappuccino")) {
+                displayNode("give")
+            }
+            else {
+                displayNode("give_failed")
+            }
+        }
+        if (choice.action == "check_latte") {
+            if (inventory.includes("latte")) {
+                displayNode("give")
+            }
+            else {
+
+                displayNode("give_failed")
+            }
+        }
+        if (choice.action == "website") {
+            window.open(choice.item)
+        }
+        if (choice.action == "clear_inventory") {
+            inventory = [];
+        } 
+
+        
     }
 
-    else if (choice.next_node_id) {
+    if (choice.next_node_id && currentNodeId != null) {
         displayNode(choice.next_node_id);
     }
     else {
